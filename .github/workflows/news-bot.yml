@@ -10,6 +10,9 @@ concurrency:
   group: news-bot
   cancel-in-progress: false
 
+permissions:
+  contents: write
+
 jobs:
   run-bot:
     runs-on: ubuntu-latest
