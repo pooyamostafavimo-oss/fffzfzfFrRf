@@ -110,6 +110,7 @@ def extract_image(entry):
 
 
 PINNED_PRICE_LINK = "https://t.me/Tala_Dollar_ir/1153"
+CHANNEL_HANDLE = "@Tala_Dollar_ir"
 
 
 def send_to_telegram(title_fa, link, summary_fa, image_url):
@@ -118,7 +119,8 @@ def send_to_telegram(title_fa, link, summary_fa, image_url):
     if summary_fa:
         short_summary = summary_fa[:500] + ("..." if len(summary_fa) > 500 else "")
         caption += f"{html.escape(short_summary)}\n\n"
-    caption += f'🔗 <a href="{link}">مشاهده خبر اصلی (انگلیسی)</a>'
+    caption += f'🔗 <a href="{link}">مشاهده خبر اصلی (انگلیسی)</a>\n\n'
+    caption += CHANNEL_HANDLE
 
     if image_url:
         url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendPhoto"
