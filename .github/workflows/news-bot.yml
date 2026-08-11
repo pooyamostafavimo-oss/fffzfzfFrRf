@@ -1,0 +1,41 @@
+name: Economic News Bot
+
+on:
+  schedule:
+    # هر ۳۰ دقیقه یک‌بار اجرا می‌شه (زمان UTC)
+    - cron: "*/30 * * * *"
+  workflow_dispatch: {}   # امکان اجرای دستی از تب Actions در گیت‌هاب
+
+concurrency:
+  group: news-bot
+  cancel-in-progress: false
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install feedparser requests
+
+      - name: Run bot
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python bot.py
+
+      - name: Commit updated posted.json
+        run: |
+          git config user.name "news-bot"
+          git config user.email "news-bot@users.noreply.github.com"
+          git add posted.json
+          git diff --cached --quiet || git commit -m "update posted news history [skip ci]"
+          git push
