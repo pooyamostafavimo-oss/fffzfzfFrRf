@@ -35,12 +35,16 @@ MAX_POSTS_PER_RUN = 5        # حداکثر تعداد پستی که تو هر �
 MAX_CANDIDATES_PER_RUN = 25  # حداکثر تعداد خبری که تو هر اجرا به Gemini برای بررسی فرستاده می‌شه (برای رعایت quota رایگان)
 
 # فیدهای RSS اخبار اقتصادی جهانی (رایگان و بدون نیاز به کلید API)
+# نکته: بلومبرگ، رویترز و فارکس‌فکتوری دیگه فید RSS رسمی و رایگان ندارن،
+# پس به‌جاشون از منابع معتبر معادل استفاده شده (CNBC برای بلومبرگ،
+# MarketWatch/Dow Jones برای رویترز، Investing.com Forex برای فارکس‌فکتوری)
 RSS_FEEDS = [
-    "https://www.investing.com/rss/news_25.rss",        # Investing.com - Economy
-    "https://www.investing.com/rss/news_285.rss",        # Investing.com - Forex
-    "https://feeds.content.dowjones.io/public/rss/RSSMarketsMain",  # MarketWatch
-    "https://www.cnbc.com/id/20910258/device/rss/rss.html",  # CNBC Economy
-    "https://feeds.a.dj.com/rss/RSSWorldNews.xml",       # WSJ World News
+    "https://feeds.a.dj.com/rss/RSSWorldNews.xml",             # وال استریت ژورنال (WSJ) - اخبار جهانی
+    "https://moxie.foxbusiness.com/google-publisher/economy.xml",  # فاکس بیزینس - اقتصاد
+    "https://moxie.foxbusiness.com/google-publisher/markets.xml",  # فاکس بیزینس - بازارها
+    "https://www.cnbc.com/id/20910258/device/rss/rss.html",    # CNBC اقتصاد (جایگزین بلومبرگ)
+    "https://feeds.content.dowjones.io/public/rss/RSSMarketsMain",  # MarketWatch/Dow Jones (جایگزین رویترز)
+    "https://www.investing.com/rss/news_285.rss",              # Investing.com فارکس (جایگزین فارکس‌فکتوری)
 ]
 
 
