@@ -109,8 +109,12 @@ def extract_image(entry):
     return None
 
 
+PINNED_PRICE_LINK = "https://t.me/Tala_Dollar_ir/1153"
+
+
 def send_to_telegram(title_fa, link, summary_fa, image_url):
     caption = f"📌 <b>{html.escape(title_fa)}</b>\n\n"
+    caption += f'<b>💰 برای مشاهده قیمت لحظه‌ای <a href="{PINNED_PRICE_LINK}">اینجا</a> کلیک کنید</b>\n\n'
     if summary_fa:
         short_summary = summary_fa[:500] + ("..." if len(summary_fa) > 500 else "")
         caption += f"{html.escape(short_summary)}\n\n"
