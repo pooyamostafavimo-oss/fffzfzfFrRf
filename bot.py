@@ -23,7 +23,7 @@ BOT_TOKEN = os.environ["BOT_TOKEN"]          # از GitHub Secrets خونده م
 CHANNEL_ID = os.environ["CHANNEL_ID"]        # مثلاً @my_econ_news یا -100xxxxxxxxxx
 GEMINI_API_KEY = os.environ["GEMINI_API_KEY"]  # کلید رایگان از aistudio.google.com/app/apikey
 
-GEMINI_MODEL = "gemini-2.5-flash-lite"   # رایگان‌ترین و پرمحدودیت‌ترین مدل فعلی گوگل
+GEMINI_MODEL = "gemini-flash-lite-latest"   # alias همیشه‌به‌روز گوگل به جدیدترین مدل flash-lite پایدار
 GEMINI_URL = (
     f"https://generativelanguage.googleapis.com/v1beta/models/"
     f"{GEMINI_MODEL}:generateContent?key={GEMINI_API_KEY}"
