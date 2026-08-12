@@ -125,13 +125,47 @@ def extract_image(entry):
     return None
 
 
-PINNED_PRICE_LINK = "https://t.me/Tala_Dollar_ir/1153"
+# اگه گرفتن لینک پیام پین‌شده به هر دلیلی fail بشه (مثلاً خطای شبکه)، از این
+# لینک قدیمی به‌عنوان آخرین راه‌حل استفاده می‌شه (ممکنه دیگه معتبر نباشه).
+PINNED_PRICE_LINK_FALLBACK = "https://t.me/Tala_Dollar_ir/1153"
 CHANNEL_HANDLE = "@Tala_Dollar_ir"
 
 
-def send_to_telegram(title_fa, link, summary_fa, image_url):
+def get_pinned_message_link():
+    """
+    با متد getChat تلگرام، آیدی پیام پین‌شده‌ی *فعلی* کانال رو می‌گیره و
+    لینک مستقیمش رو می‌سازه. این‌طوری صرف‌نظر از این‌که کدوم بات (این بات یا
+    بات قیمت طلا) پیام رو پین کرده باشه، لینک همیشه خودکار به‌روزه.
+    """
+    url = f"https://api.telegram.org/bot{BOT_TOKEN}/getChat"
+    try:
+        resp = requests.get(url, params={"chat_id": CHANNEL_ID}, timeout=15)
+        data = resp.json()
+        if not data.get("ok"):
+            print(f"⚠️ getChat ناموفق بود، از لینک قدیمی استفاده می‌شه: {data}")
+            return PINNED_PRICE_LINK_FALLBACK
+
+        pinned = data["result"].get("pinned_message")
+        if not pinned:
+            print("⚠️ کانال الان پیام پین‌شده‌ای نداره، از لینک قدیمی استفاده می‌شه.")
+            return PINNED_PRICE_LINK_FALLBACK
+
+        message_id = pinned["message_id"]
+        chat_id_str = str(CHANNEL_ID)
+        if chat_id_str.startswith("@"):
+            username = chat_id_str.lstrip("@")
+            return f"https://t.me/{username}/{message_id}"
+        # کانال پرایوت: آیدی عددی که با -100 شروع می‌شه
+        internal_id = chat_id_str[4:] if chat_id_str.startswith("-100") else chat_id_str.lstrip("-")
+        return f"https://t.me/c/{internal_id}/{message_id}"
+    except Exception as e:
+        print(f"⚠️ خطا در گرفتن پیام پین‌شده، از لینک قدیمی استفاده می‌شه: {e}")
+        return PINNED_PRICE_LINK_FALLBACK
+
+
+def send_to_telegram(title_fa, link, summary_fa, image_url, pinned_price_link):
     caption = f"📌 <b>{html.escape(title_fa)}</b>\n\n"
-    caption += f'<b>💰 برای مشاهده قیمت لحظه‌ای <a href="{PINNED_PRICE_LINK}">اینجا</a> کلیک کنید</b>\n\n'
+    caption += f'<b>💰 برای مشاهده قیمت لحظه‌ای <a href="{pinned_price_link}">اینجا</a> کلیک کنید</b>\n\n'
     if summary_fa:
         short_summary = summary_fa[:500] + ("..." if len(summary_fa) > 500 else "")
         caption += f"{html.escape(short_summary)}\n\n"
@@ -170,6 +204,8 @@ def main():
     posted_set = set(posted)
     new_posts_count = 0
     candidates_checked = 0
+    pinned_price_link = get_pinned_message_link()
+    print(f"ℹ️ لینک پیام پین‌شده‌ی فعلی: {pinned_price_link}")
 
     for feed_url in RSS_FEEDS:
         if new_posts_count >= MAX_POSTS_PER_RUN or candidates_checked >= MAX_CANDIDATES_PER_RUN:
@@ -205,7 +241,7 @@ def main():
             image_url = extract_image(entry)
 
             print(f"📤 در حال پست: {title_fa}")
-            success = send_to_telegram(title_fa, link, summary_fa, image_url)
+            success = send_to_telegram(title_fa, link, summary_fa, image_url, pinned_price_link)
 
             posted.append(link)
             posted_set.add(link)
