@@ -1,6 +1,4 @@
 [
-  "https://www.wsj.com/business/health-care-roundup-market-talk-5f95b714?mod=rss_markets_main",
-  "https://www.wsj.com/politics/policy/hedge-fund-managers-lose-out-on-lucrative-tax-strategy-3d9e05b4?mod=rss_markets_main",
   "https://www.wsj.com/finance/ai-stock-rally-checked-by-relentless-treasury-selloff-c434b12e?mod=rss_markets_main",
   "https://www.wsj.com/business/tech-media-telecom-roundup-market-talk-4e144990?mod=rss_markets_main",
   "https://www.wsj.com/finance/commodities-futures/natural-gas-lower-as-trading-centers-around-3-mmbtu-fa80eca4?mod=rss_markets_main",
@@ -498,5 +496,7 @@
   "https://www.wsj.com/tech/ai/anthropic-ipo-private-trust-188f41f7?mod=rss_markets_main",
   "https://www.wsj.com/finance/stocks/nikkei-falls-1-8-tracking-wall-streets-losses-413895f0?mod=rss_markets_main",
   "https://www.wsj.com/finance/commodities-futures/oil-futures-fall-on-possible-correction-but-drop-may-be-limited-by-geopolitical-tensions-21ff1c15?mod=rss_markets_main",
-  "https://www.wsj.com/finance/currencies/yen-consolidates-but-may-be-supported-by-risk-off-mood-7504bde7?mod=rss_markets_main"
+  "https://www.wsj.com/finance/currencies/yen-consolidates-but-may-be-supported-by-risk-off-mood-7504bde7?mod=rss_markets_main",
+  "https://www.wsj.com/finance/investing/u-s-treasury-yields-fall-in-asian-trade-e5171539?mod=rss_markets_main",
+  "https://www.wsj.com/finance/commodities-futures/gold-edges-higher-as-traders-weigh-fed-rate-hike-expectations-3517c447?mod=rss_markets_main"
 ]
